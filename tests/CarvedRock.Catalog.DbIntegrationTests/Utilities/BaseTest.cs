@@ -1,7 +1,7 @@
 ﻿using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace CarvedRock.Catalog.IntegrationTests.Utilities;
+namespace CarvedRock.Catalog.DbIntegrationTests.Utilities;
 
 public class BaseTest : IClassFixture<CustomApiFactory<Program>>, IClassFixture<SharedFixture>
 {

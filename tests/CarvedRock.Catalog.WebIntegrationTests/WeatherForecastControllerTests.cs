@@ -1,7 +1,10 @@
-namespace CarvedRock.Catalog.IntegrationTests;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
+
+namespace CarvedRock.Catalog.WebIntegrationTests;
 
 [Collection("API Integration Test")]
-public class WeatherForecastControllerTests(ITestOutputHelper output, CustomApiFactory<Program> factory, SharedFixture shared) 
+public class WeatherForecastControllerTests(ITestOutputHelper output, WebApplicationFactory<Program> factory, SharedFixture shared) 
     : BaseTest(output, factory, shared)
 {
     [Fact]
@@ -18,7 +21,7 @@ public class WeatherForecastControllerTests(ITestOutputHelper output, CustomApiF
     public async Task Authenticated_Request_Gets_Weather_Forecast(string postalCode)
     {
         var weather = await ClientWithBearer.GetForResult<WeatherForecast[]>(
-            $"/v1/weatherforecast?postalCode={postalCode}");
+            $"/v1/weatherforecast?postalCode={postalCode}", HttpStatusCode.OK);
 
         weather.Should().NotBeNullOrEmpty();
         weather.Should().HaveCount(5);
@@ -29,7 +32,7 @@ public class WeatherForecastControllerTests(ITestOutputHelper output, CustomApiF
     [InlineData("22222", HttpStatusCode.BadRequest)]
     public async Task Authenticated_Request_Returns_ProblemDetails(string badInput, HttpStatusCode expectedResult)
     {
-        var problem = await ClientWithBearer.GetForProblem(
+        var problem = await ClientWithBearer.GetForResult<ProblemDetails>(
                        $"/v1/weatherforecast?postalCode={badInput}", expectedResult);
 
         problem.Should().NotBeNull();

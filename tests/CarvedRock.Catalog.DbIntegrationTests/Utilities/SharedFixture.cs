@@ -1,6 +1,6 @@
 ﻿using IdentityModel.Client;
 
-namespace CarvedRock.Catalog.IntegrationTests.Utilities;
+namespace CarvedRock.Catalog.DbIntegrationTests.Utilities;
 
 public class SharedFixture : IAsyncLifetime
 {

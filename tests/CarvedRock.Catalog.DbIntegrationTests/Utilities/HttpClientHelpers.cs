@@ -1,30 +1,17 @@
 ﻿using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
 
-namespace CarvedRock.Catalog.IntegrationTests.Utilities;
+namespace CarvedRock.Catalog.DbIntegrationTests.Utilities;
 
 public static class HttpClientHelpers
 {
-    public static async Task<T> GetForResult<T>(this HttpClient client, string url, ITestOutputHelper? output = null)
-    {
-        var response = await client.GetAsync(url);
-        if (output != null) await WriteJsonMessage(response, output);
-
-        response.Should().BeSuccessful();
-        var targetObject = await response.Content.ReadFromJsonAsync<T>();
-
-        Assert.NotNull(targetObject);
-        return targetObject!;
-    }
-
-    public static async Task<ProblemDetails> GetForProblem(this HttpClient client, string url, 
+    public static async Task<T> GetForResult<T>(this HttpClient client, string url,
         HttpStatusCode expectedStatus, ITestOutputHelper? output = null)
     {
         var response = await client.GetAsync(url);
         if (output != null) await WriteJsonMessage(response, output);
 
         response.StatusCode.Should().Be(expectedStatus);
-        var targetObject = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+        var targetObject = await response.Content.ReadFromJsonAsync<T>();
 
         Assert.NotNull(targetObject);
         return targetObject!;

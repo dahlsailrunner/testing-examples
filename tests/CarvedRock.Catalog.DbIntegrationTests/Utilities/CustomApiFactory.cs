@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace CarvedRock.Catalog.IntegrationTests.Utilities;
+namespace CarvedRock.Catalog.DbIntegrationTests.Utilities;
 
 public class CustomApiFactory<TProgram>
     : WebApplicationFactory<TProgram> where TProgram : class
