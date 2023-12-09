@@ -4,7 +4,9 @@ using CarvedRock.Catalog.Api;
 using CarvedRock.Catalog.Api.LogEnrichers;
 using CarvedRock.Catalog.Api.StartupServices;
 using CarvedRock.Catalog.Api.Swagger;
+using CarvedRock.Data;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Core;
 
@@ -21,6 +23,10 @@ try
    
     builder.Services.AddControllers();
     builder.Services.AddHealthChecks();
+    builder.Services
+        .AddMvcCore(options => { options.AddBaseAuthorizationFilters(configuration); })
+        .AddApiExplorer();
+
     builder.Services.AddProblemDetails(opts => { opts.CustomizeProblemDetails = CustomExceptionHandler.CustomizeResponse; });
     builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
@@ -30,9 +36,10 @@ try
         .AddTransient<ILogEventEnricher, StandardEnricher>()
         .AddHttpContextAccessor();
 
-    builder.Services
-        .AddMvcCore(options => { options.AddBaseAuthorizationFilters(configuration); }) //                .AddCors()
-        .AddApiExplorer();
+    var connStr = configuration.GetConnectionString("DbContext");
+
+    builder.Services.AddDbContext<LocalContext>(options =>
+        options.UseNpgsql(configuration.GetConnectionString("DbContext")));
 
     JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
     builder.Services
@@ -52,7 +59,7 @@ try
             .Enrich.WithProperty("Application", "CarvedRock_Catalog.Api") // or entry assembly name
             .WriteTo.Console()
             //.WriteTo.Seq("http://host.docker.internal:5341");  // comment this IN if using docker
-            .WriteTo.Seq("http://localhost:5341");       // comment this OUT if using using docker);
+            .WriteTo.Seq("http://localhost:5341");       // comment this OUT if NOT using docker
     }));
 
     var app = builder.Build();
@@ -69,15 +76,17 @@ try
     }
 
     var corsOrigins = configuration.GetValue<string>("CORSOrigins")?.Split(",");
-    if (corsOrigins!= null && corsOrigins.Any())
+    if (corsOrigins!= null && corsOrigins.Length != 0)
     {
         app.UseCors(bld => bld
             .WithOrigins(corsOrigins)
             .AllowAnyHeader()
             .AllowAnyMethod());
     }
-
+   
     var apiVersionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+    app.Services.InitializeDatabase(app.Environment.EnvironmentName);
 
     app
         .UseSwaggerFeatures(configuration, apiVersionProvider, app.Environment)

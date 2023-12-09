@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CarvedRock.Catalog.DbIntegrationTests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:60177;http://localhost:60179"
+    }
+  }
+}

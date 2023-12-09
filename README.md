@@ -43,6 +43,33 @@ This solution was generated from an ASP.NET Core WebAPI template that comes with
     - Integration tests should also work
 - Check out the liveness health check at `/health`
 
+## Database
+
+To run the database locally, simply do this:
+
+```bash
+docker run --name cr-postgres -p 5432:5432 -e POSTGRES_PASSWORD=testingIsFUN -d postgres
+```
+
+When you run locally in Development, the database will be cleaned up and the data 
+is re-created each time the application starts. 
+
+### Migrations
+
+Before generating any NEW migrations, make sure the local database (or whatever database
+you are targeting) is up and running and has the latest migrations applied.  The easiest
+way to do this is just run the solution.
+
+To generate new migrations, run this command from the `CarvedRock.Data` directory (replace
+`<migration-name>` with a meaningful valid class name, like `AddedCategory`):
+
+```bash
+dotnet ef migrations add <migration-name> 
+```
+
+This will create a new migration file in the `CarvedRock.Data/Migrations` directory that you
+can review and edit if necessary.
+
 ## Contributing
 
 For the repo and make a PR!  Make sure to update the tests! :)

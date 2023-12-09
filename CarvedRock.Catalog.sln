@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.Catalog.WebInteg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.Catalog.DbIntegrationTests", "tests\CarvedRock.Catalog.DbIntegrationTests\CarvedRock.Catalog.DbIntegrationTests.csproj", "{B68795D1-7CB0-4524-8511-BA0F8BCA2809}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarvedRock.Data", "CarvedRock.Data\CarvedRock.Data.csproj", "{855CF05F-AD2C-4A94-8353-7C9F4091F9B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{B68795D1-7CB0-4524-8511-BA0F8BCA2809}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B68795D1-7CB0-4524-8511-BA0F8BCA2809}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B68795D1-7CB0-4524-8511-BA0F8BCA2809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{855CF05F-AD2C-4A94-8353-7C9F4091F9B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{855CF05F-AD2C-4A94-8353-7C9F4091F9B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{855CF05F-AD2C-4A94-8353-7C9F4091F9B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{855CF05F-AD2C-4A94-8353-7C9F4091F9B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
