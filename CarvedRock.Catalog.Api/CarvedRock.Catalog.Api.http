@@ -1,0 +1,30 @@
+﻿@CarvedRock.Catalog.Api_HostAddress = https://localhost:44380
+
+### use this to get an access token - take if from the response
+### and paste it into the {{access_token}} variable below
+POST https://demo.duendesoftware.com/connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=m2m&client_secret=secret&grant_type=client_credentials&scope=api
+
+###
+
+@access_token = eyJhbGciOiJSUzI1NiIsImtpZCI6IkMyNTJGOUNBQjc3Q0MxNTQwNTBFMTg1NTk5MjJCMTJGIiwidHlwIjoiYXQrand0In0.eyJpc3MiOiJodHRwczovL2RlbW8uZHVlbmRlc29mdHdhcmUuY29tIiwibmJmIjoxNzAyMTQzNzE3LCJpYXQiOjE3MDIxNDM3MTcsImV4cCI6MTcwMjE0NzMxNywiYXVkIjoiYXBpIiwic2NvcGUiOlsiYXBpIl0sImNsaWVudF9pZCI6Im0ybSIsImp0aSI6IjdFODYyMDNGMDUyOTExOTI0QkU2MUNFNTFGNDZFMzlGIn0.OMuovCTRj_NThzphO-1sK3Rgtv9pWybv6HhHZXh-jNpFbgsa4PpL26cLV_XNfZfGObGyKFGplYgW_e62_aAHXc9Du05FmPVGOyI-I5K0xb6JRVmece5dZ6R_6KxDIc0oxkn0HxyTzO1LtiVoy4j7KhMtRXVhc-R9Rlm5QBmYfKiKkWhOw10yU2DhlGLUcb2DtB4atCputj5wMzotukhnQ2aMM7xtc_Fxe5EWo36hw1QS_5TKC3sHTbX3cRPQ970jzLPBFOvO7NgCx1dT5GeeUM0BYEdWHE5Fxbwo9rNejePX0QIM3drzn2KBe3BMk9wQumFzoMUD23yg5IYQ36iOcw
+
+GET {{CarvedRock.Catalog.Api_HostAddress}}/v1/products
+Authorization: Bearer {{access_token}}
+###
+
+GET {{CarvedRock.Catalog.Api_HostAddress}}/v1/products/1
+Authorization: Bearer {{access_token}}
+###
+
+GET {{CarvedRock.Catalog.Api_HostAddress}}/v1/products/6
+Authorization: Bearer {{access_token}}
+###
+
+
+GET {{CarvedRock.Catalog.Api_HostAddress}}/v1/products/7
+Authorization: Bearer {{access_token}}
+###
+

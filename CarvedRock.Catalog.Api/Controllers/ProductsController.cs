@@ -24,6 +24,4 @@ public class ProductsController(LocalContext dbContext) : ControllerBase
         var product = await dbContext.Products.FindAsync(id);
         return product ?? throw new KeyNotFoundException($"Product with id {id} not found");
     }
-
-
 }

@@ -9,12 +9,14 @@ public static class Initialization
     {
         using var scope = serviceProvider.CreateScope(); // required because dbContext is a scoped service
         using var context = new LocalContext(scope.ServiceProvider.GetRequiredService<DbContextOptions<LocalContext>>());
-        context.Database.EnsureCreated();
-        context.Database.Migrate();
 
         if (environmentName == "Development")
         {
-            context.StartWithSampleData();
+            context.StartWithSampleData();  // create / migrate database then add data
+        }
+        else
+        {
+            context.Database.Migrate(); // just make sure we're up-to-date
         }
     }
 }

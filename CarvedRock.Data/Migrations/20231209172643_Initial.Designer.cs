@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarvedRock.Data.Migrations
 {
     [DbContext(typeof(LocalContext))]
-    [Migration("20231209130723_Initial")]
+    [Migration("20231209172643_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

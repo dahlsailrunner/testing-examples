@@ -11,12 +11,8 @@ public class LocalContext(DbContextOptions<LocalContext> options) : DbContext(op
 
     public void StartWithSampleData()
     {
-        if (Products.Any() || ProductRatings.Any())
-        {
-            Products.RemoveRange(Products);
-            ProductRatings.RemoveRange(ProductRatings);
-            SaveChanges();
-        }
+        Database.EnsureDeleted();
+        Database.Migrate();
 
         Products.Add(new Product
         {
