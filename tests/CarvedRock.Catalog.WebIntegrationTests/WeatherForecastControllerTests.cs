@@ -21,7 +21,7 @@ public class WeatherForecastControllerTests(ITestOutputHelper output, WebApplica
     public async Task Authenticated_Request_Gets_Weather_Forecast(string postalCode)
     {
         var weather = await ClientWithBearer.GetForResult<WeatherForecast[]>(
-            $"/v1/weatherforecast?postalCode={postalCode}", HttpStatusCode.OK);
+            $"/v1/weatherforecast?postalCode={postalCode}", HttpStatusCode.OK, Output);
 
         weather.Should().NotBeNullOrEmpty();
         weather.Should().HaveCount(5);

@@ -27,7 +27,10 @@ try
         .AddMvcCore(options => { options.AddBaseAuthorizationFilters(configuration); })
         .AddApiExplorer();
 
-    builder.Services.AddProblemDetails(opts => { opts.CustomizeProblemDetails = CustomExceptionHandler.CustomizeResponse; });
+    builder.Services.AddProblemDetails(opts =>
+    {
+        opts.CustomizeProblemDetails = CustomExceptionHandler.CustomizeResponse;
+    });
     builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
     builder.Services.AddLogic()// defined in StartupServices folder
@@ -35,8 +38,6 @@ try
         .AddSwaggerFeatures()
         .AddTransient<ILogEventEnricher, StandardEnricher>()
         .AddHttpContextAccessor();
-
-    var connStr = configuration.GetConnectionString("DbContext");
 
     builder.Services.AddDbContext<LocalContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("DbContext")));

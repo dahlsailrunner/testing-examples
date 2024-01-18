@@ -5,7 +5,8 @@ namespace CarvedRock.Catalog.DbIntegrationTests.Utilities;
 
 public class BaseTest : IClassFixture<CustomApiFactory<Program>>, IClassFixture<SharedFixture>
 {
-    protected BaseTest(ITestOutputHelper output, WebApplicationFactory<Program> factory, SharedFixture shared) 
+    protected BaseTest(ITestOutputHelper output, WebApplicationFactory<Program> factory, 
+        SharedFixture shared) 
     {
         Output = output;
 

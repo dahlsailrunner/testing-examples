@@ -16,13 +16,14 @@ public class SharedFixture : IAsyncLifetime
         var apiName = cfg.GetValue<string>("Authentication:ApiName");
 
         var tokenClient = new HttpClient();
-        var tokenResponse = await tokenClient.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-        {
-            Address = $"{authority}/connect/token",
-            Scope = apiName,
-            ClientId = "m2m",
-            ClientSecret = "secret"
-        });
+        var tokenResponse = await tokenClient.RequestClientCredentialsTokenAsync(
+            new ClientCredentialsTokenRequest
+            {
+                Address = $"{authority}/connect/token",
+                Scope = apiName,
+                ClientId = "m2m",
+                ClientSecret = "secret"
+            });
 
         AccessToken = tokenResponse.AccessToken!;
     }

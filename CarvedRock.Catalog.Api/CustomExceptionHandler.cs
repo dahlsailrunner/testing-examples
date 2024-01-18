@@ -5,7 +5,8 @@ namespace CarvedRock.Catalog.Api;
 
 public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
 {
-    public ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    public ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, 
+        CancellationToken cancellationToken)
     {
         switch (exception)
         {
