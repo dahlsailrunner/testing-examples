@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using Xunit.Abstractions;
 
 namespace SimpleApi.Tests.Utilities;
 
@@ -33,10 +32,16 @@ public static class HttpClientExtensions
 
     public static void WriteJsonMessage(string json, ITestOutputHelper output)
     {
-        var jsonObject = JsonDocument.Parse(json);
-        var jsonOutput = JsonSerializer.Serialize(jsonObject, PrettyJsonOptions);
+        string outputJson;
+        if (string.IsNullOrWhiteSpace(json))
+            outputJson = json;
+        else
+        {
+            var jsonObject = JsonDocument.Parse(json);
+            outputJson = JsonSerializer.Serialize(jsonObject, PrettyJsonOptions);
+        }
         output.WriteLine("---- JSON response ----");
-        output.WriteLine(jsonOutput);
+        output.WriteLine(outputJson);
         output.WriteLine("-----------------------");
     }
 }

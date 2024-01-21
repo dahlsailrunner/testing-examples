@@ -1,9 +1,7 @@
-using Xunit.Abstractions;
-
 namespace SimpleApi.Tests;
 
 public class BetterWeatherForecast(WebApplicationFactory<Program> factory, ITestOutputHelper output)
-    : BaseTest(factory, output)
+    : BaseTest(factory)
 {
     private readonly List<string> _possibleSummaries =
         ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
@@ -63,7 +61,7 @@ public class BetterWeatherForecast(WebApplicationFactory<Program> factory, ITest
     public async Task ShowOutputHelperWhenTestFails()
     {
         var problemDetails = await Client.GetJsonResultAsync<WeatherForecast>("/weatherForecast",
-            HttpStatusCode.BadRequest, Output);
+            HttpStatusCode.BadRequest, output);
 
         // this test fails since I'm trying to deserialize a WeatherForecast instead of
         // a ProblemDetails but if you look at the test output you'll see the JSON response

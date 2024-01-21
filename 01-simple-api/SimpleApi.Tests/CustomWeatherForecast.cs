@@ -1,9 +1,7 @@
-﻿using Xunit.Abstractions;
-
-namespace SimpleApi.Tests;
+﻿namespace SimpleApi.Tests;
 
 public class CustomWeatherForecast(CustomApiFactory<Program> factory, ITestOutputHelper output)
-    : BaseTest(factory, output), IClassFixture<CustomApiFactory<Program>>
+    : BaseTest(factory), IClassFixture<CustomApiFactory<Program>>
 {
     private readonly List<string> _possibleSummaries =
         ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
@@ -27,7 +25,7 @@ public class CustomWeatherForecast(CustomApiFactory<Program> factory, ITestOutpu
     public async Task MissingPostalCodeReturnsBadRequest()
     {
         var problemDetails = await Client.GetJsonResultAsync<ProblemDetails>("/weatherForecast",
-            HttpStatusCode.BadRequest, Output);
+            HttpStatusCode.BadRequest, output);
 
         Assert.Equal("Postal Code is required.", problemDetails.Detail);
         Assert.Equal(400, problemDetails.Status);
@@ -63,7 +61,7 @@ public class CustomWeatherForecast(CustomApiFactory<Program> factory, ITestOutpu
     public async Task ShowOutputHelperWhenTestFails()
     {
         var problemDetails = await Client.GetJsonResultAsync<WeatherForecast>("/weatherForecast",
-            HttpStatusCode.BadRequest, Output);
+            HttpStatusCode.BadRequest, output);
 
         // this test fails since I'm trying to deserialize a WeatherForecast instead of
         // a ProblemDetails but if you look at the test output you'll see the JSON response
