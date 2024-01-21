@@ -55,16 +55,4 @@ public class CustomWeatherForecast(CustomApiFactory<Program> factory, ITestOutpu
         Assert.StartsWith("An error occurred ", problemDetails.Title);
         Assert.Equal(500, problemDetails.Status);
     }
-
-    //[Fact]
-    [Fact(Skip = "Run this when you want to see the output helper in action")]
-    public async Task ShowOutputHelperWhenTestFails()
-    {
-        var problemDetails = await Client.GetJsonResultAsync<WeatherForecast>("/weatherForecast",
-            HttpStatusCode.BadRequest, output);
-
-        // this test fails since I'm trying to deserialize a WeatherForecast instead of
-        // a ProblemDetails but if you look at the test output you'll see the JSON response
-        // at the bottom of the output (under the exception)
-    }
 }

@@ -37,8 +37,16 @@ public static class HttpClientExtensions
             outputJson = json;
         else
         {
-            var jsonObject = JsonDocument.Parse(json);
-            outputJson = JsonSerializer.Serialize(jsonObject, PrettyJsonOptions);
+            try
+            {
+                var jsonObject = JsonDocument.Parse(json);
+                outputJson = JsonSerializer.Serialize(jsonObject, PrettyJsonOptions);
+            }
+            catch (Exception)
+            {
+                outputJson = json;  // couldn't parse it, so just return the original
+            }
+            
         }
         output.WriteLine("---- JSON response ----");
         output.WriteLine(outputJson);
