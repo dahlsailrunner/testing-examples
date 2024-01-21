@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarvedRock.Catalog.DbIntegrationTests;
 
 [Collection("API Integration Test")]
-public class WeatherForecastControllerTests(ITestOutputHelper output, CustomApiFactory<Program> factory, SharedFixture shared) 
-    : BaseTest(output, factory, shared)
+public class WeatherForecastControllerTests(ITestOutputHelper output, 
+    CustomApiFactory<Program> factory, SharedFixture shared) : BaseTest(output, factory, shared)
 {
     [Fact]
     public async Task Anonymous_Request_Gets_Unauthorized()

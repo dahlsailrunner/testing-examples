@@ -1,17 +1,13 @@
 ﻿using CarvedRock.Data;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarvedRock.Catalog.DbIntegrationTests.Utilities;
 
-public class CustomApiFactory<TProgram>(SharedFixture fixture) : WebApplicationFactory<TProgram>
-    where TProgram : class
+public static class WebHostExtensions
 {
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    public static IWebHostBuilder SwapDatabase(this IWebHostBuilder builder, string connectionString)
     {
-        builder.UseEnvironment("test");
-
-        builder.ConfigureServices(services =>
+        return builder.ConfigureServices(services =>
         {
             // remove the default DbContext registrations
             var dbContextInterfaceDescriptor = services.SingleOrDefault(
@@ -25,7 +21,7 @@ public class CustomApiFactory<TProgram>(SharedFixture fixture) : WebApplicationF
             // add back the container-based dbContext
             services.AddDbContext<LocalContext>(options =>
             {
-                options.UseNpgsql(fixture.TestConnectionString);
+                options.UseNpgsql(connectionString);
                 options.EnableSensitiveDataLogging();
             });
         });
