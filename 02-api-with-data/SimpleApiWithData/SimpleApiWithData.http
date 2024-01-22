@@ -1,0 +1,63 @@
+@SimpleApi_HostAddress = https://localhost:7275
+
+GET {{SimpleApi_HostAddress}}/v1/products
+Accept: application/json
+
+###
+
+GET {{SimpleApi_HostAddress}}/v1/products?category=equip
+Accept: application/json
+
+###
+
+
+GET {{SimpleApi_HostAddress}}/weatherforecast?postalCode=55125
+Accept: application/json
+
+###
+
+GET {{SimpleApi_HostAddress}}/v1/products/3
+Accept: application/json
+
+###
+
+GET {{SimpleApi_HostAddress}}/v1/products/20
+Accept: application/json
+
+###
+
+
+POST {{SimpleApi_HostAddress}}/v1/products
+Content-Type: application/json
+
+{
+    "name": "macguffin",
+    "description": "a thing that does stuff",
+    "category": "",
+    "price": 1.00,
+    "imgUrl": "https://some.place/wow.png"
+}
+
+###
+
+POST {{SimpleApi_HostAddress}}/v1/products
+Content-Type: application/json
+
+{
+    "name": "macguffin",
+    "description": "a thing that does stuff",
+    "category": "equip",
+    "price": 1.00,
+    "imgUrl": "https://some.place/wow.png"
+}
+
+###
+
+GET {{SimpleApi_HostAddress}}/weatherforecast?postalCode=525
+Accept: application/json
+
+###
+
+
+GET {{SimpleApi_HostAddress}}/weatherforecast?postalCode=error
+Accept: application/json
