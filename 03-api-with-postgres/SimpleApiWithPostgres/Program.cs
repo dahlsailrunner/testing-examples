@@ -4,14 +4,14 @@ using System.Net;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Serilog.Formatting.Compact;
-using SimpleApiWithData.Data;
-using SimpleApiWithData.Validators;
+using SimpleApiWithPostgres.Data;
+using SimpleApiWithPostgres.Validators;
 using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.Host.UseSerilog((context, _, configuration) => configuration
+    builder.Host.UseSerilog((context, configuration) => configuration
         .ReadFrom.Configuration(context.Configuration)
         .Enrich.FromLogContext()
         .WriteTo.Console(new RenderedCompactJsonFormatter())
@@ -23,10 +23,8 @@ try
     builder.Services.AddControllers();
     builder.Services.AddApiVersioning().AddMvc();
 
-    var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-    var dbPath = Path.Join(path, "simple-data.db");
     builder.Services.AddDbContext<LocalContext>(options =>
-               options.UseSqlite($"Data Source={dbPath}"));
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DbContext")));
 
     builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
 

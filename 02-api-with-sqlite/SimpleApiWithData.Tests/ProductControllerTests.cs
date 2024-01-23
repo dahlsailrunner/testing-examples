@@ -70,6 +70,18 @@ public class ProductControllerTests(CustomApiFactory<Program> factory, ITestOutp
         Assert.Equal(newProduct.Description, createdProduct.Description);
         Assert.Equal(newProduct.Category, createdProduct.Category);
         Assert.Equal(newProduct.ImgUrl, createdProduct.ImgUrl);
+
+        // verify we can retrieve the new product
+        var retrievedProduct = await Client.GetJsonResultAsync<Product>(
+            $"/v1/products/{createdProduct.Id}", HttpStatusCode.OK);
+
+        Assert.NotNull(retrievedProduct);
+        Assert.Equal(createdProduct.Id, retrievedProduct.Id);
+        Assert.Equal(createdProduct.Name, retrievedProduct.Name);
+        Assert.Equal(createdProduct.Price, retrievedProduct.Price);
+        Assert.Equal(createdProduct.Description, retrievedProduct.Description);
+        Assert.Equal(createdProduct.Category, retrievedProduct.Category);
+        Assert.Equal(createdProduct.ImgUrl, retrievedProduct.ImgUrl);
     }
 
     [Fact(DisplayName = "Cannot create product with duplicate name")]

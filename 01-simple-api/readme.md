@@ -1,5 +1,7 @@
 # Simple API
 
+> **NOTE:** A [blog post explaining this code and the testing structure](https://knowyourtoolset.com/2024/01/integration-testing/) is available.
+
 Key features:
 
 - `GET` method has a `postalCode` query string parameter
