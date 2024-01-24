@@ -98,7 +98,6 @@ public class ProductControllerTests(CustomApiFactory<Program> factory, ITestOutp
         OutputJson(problem);
         Assert.Equal("Validation error(s) occurred.", problem.Title);
         Assert.Equal("A product with the same name already exists.", problem.Extensions["Name"]!.ToString());
-        //Assert.Equal("Category is required.", problem.Extensions["Category"]!.ToString());
     }
 
     [Theory(DisplayName = "Create Product Name validation errors")]
