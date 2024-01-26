@@ -34,6 +34,3 @@ remove the `Data/Migrations` folder and create new migrations:
 dotnet ef migrations add Initial - o Data/Migrations
 ```
 
-## Tests
-
-The only notes here are regarding the authencation logic in the tests.
