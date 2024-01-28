@@ -42,5 +42,4 @@ jobs:
         thresholds: '30 60'
 
     - name: Write to Job Summary
-      working-directory: 04-api-with-postgres-and-auth
       run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
