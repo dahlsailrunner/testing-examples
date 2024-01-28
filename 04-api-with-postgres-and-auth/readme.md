@@ -34,3 +34,40 @@ remove the `Data/Migrations` folder and create new migrations:
 dotnet ef migrations add Initial - o Data/Migrations
 ```
 
+## Creating a Coverage Report
+
+It's pretty easy to see the amount of code that's been covered
+by the integration tests without having to commit / push code
+and run pipelines.
+
+> **Prerequisite:** You need to have the report generator
+> CLI tool installed to make this work:
+> `dotnet tool install -g dotnet-reportgenerator-globaltool`
+
+Once you have the above prerequisite taken care of (it's a
+global tool - so once for your machine in general is enough),
+then just run the `local-coverage.bat` script in the root
+directory of the solution.  It's just three commands in case
+you want to run them by hand:
+
+```bash
+dotnet test --settings .\Tests\tests.runsettings
+
+reportgenerator -reports:".\Tests\**\TestResults\**\coverage.cobertura.xml" -targetdir:"coverage" -reporttypes:Html
+
+.\coverage\index.htm
+```
+
+The first line runs the tests (the `tests.runsettings`) includes
+some configuration that will capture coverage information.
+
+The `reportgenerator` command looks at the generated `coverage.cobertura.xml` files and merges them into an HTML report, which
+should be launched into a web browser with the final command.
+
+### Coverage Excludes "Migrations"
+
+In addition to generating coverage information, the `tests.runsettings` 
+file also excludes the `Migrations` folder from the coverage report.
+
+For more details about configuring `runsettings`, 
+see the [coverlet documentation](https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md#advanced-options-supported-via-runsettings) 

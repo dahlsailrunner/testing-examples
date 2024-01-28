@@ -33,7 +33,7 @@ public static class Initialization
             .RuleFor(p => p.Category, f => f.Commerce.Categories(1)[0])
             .RuleFor(p => p.ImgUrl, f => f.Image.PicsumUrl());
 
-        context.Products.AddRange(productFaker.Generate(30));
+        context.Products.AddRange(productFaker.Generate(100));
         //context.Products.Add(new Product
         //{
         //    Name = "Trailblazer",
