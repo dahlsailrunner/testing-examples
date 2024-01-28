@@ -3,6 +3,10 @@
 
 name: .NET
 
+on:
+  workflow_dispatch:
+    branches: [ main ]
+    
 jobs:
   build:
 
