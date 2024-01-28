@@ -3,10 +3,6 @@ name: .NET Coverage
 on:
   workflow_dispatch:
     branches: [ main ]
- 
-defaults:
-  run:
-    working-directory: 04-api-with-postgres-and-auth    
 
 jobs:
   build:
