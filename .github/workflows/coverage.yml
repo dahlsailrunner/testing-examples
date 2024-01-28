@@ -6,7 +6,11 @@ name: .NET Coverage
 on:
   workflow_dispatch:
     branches: [ main ]
-    
+ 
+defaults:
+  run:
+    working-directory: 04-api-with-postgres-and-auth    
+
 jobs:
   build:
 
@@ -21,18 +25,18 @@ jobs:
         dotnet-version: 8.0.x
     
     - name: Restore dependencies
-      run: dotnet restore 04-api-with-postgres-and-auth
+      run: dotnet restore
     
     - name: Build
-      run: dotnet build 04-api-with-postgres-and-auth --no-restore 
+      run: dotnet build --no-restore 
     
     - name: Test
-      run: dotnet test 04-api-with-postgres-and-auth --no-build --settings 04-api-with-postgres-and-auth/tests.runsettings
+      run: dotnet test --no-build --settings tests.runsettings
 
     - name: Publish coverage
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: 04-api-with-postgres-and-auth/**/TestResults/**/coverage.cobertura.xml
+        filename: **/TestResults/**/coverage.cobertura.xml
         badge: true
         fail_below_min: true
         format: markdown
