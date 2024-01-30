@@ -61,7 +61,7 @@ public class DatabaseFixture :IAsyncLifetime
             )
             .RespondWith(
                 Response.Create()
-                    .WithStatusCode(202)
+                    .WithStatusCode(200)
                     .WithHeader("Content-Type", "application/json")
                     .WithBody(JsonSerializer.Serialize(claims, new JsonSerializerOptions(JsonSerializerDefaults.Web)))
             );
