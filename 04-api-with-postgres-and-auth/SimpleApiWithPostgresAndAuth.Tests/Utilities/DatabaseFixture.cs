@@ -1,7 +1,11 @@
-﻿using Bogus;
+﻿using System.Text.Json;
+using Bogus;
 using Microsoft.EntityFrameworkCore;
 using SimpleApiWithPostgresAndAuth.Data;
 using Testcontainers.PostgreSql;
+using WireMock.RequestBuilders;
+using WireMock.ResponseBuilders;
+using WireMock.Server;
 
 namespace SimpleApiWithPostgresAndAuth.Tests.Utilities;
 
@@ -14,6 +18,7 @@ public class DatabaseFixture :IAsyncLifetime
             .WithPassword("notapassword")
             .Build();
 
+    public string ExternalApiBaseUrlOverride { get; private set; } = null!;
     public string TestConnectionString => _dbContainer.GetConnectionString();
 
     private LocalContext? _dbContext;
@@ -39,6 +44,27 @@ public class DatabaseFixture :IAsyncLifetime
         await CreateFreshSampleData(100);
 
         OriginalProducts = await _dbContext.Products.ToListAsync();
+
+        var server = WireMockServer.Start();
+
+        var claims = new List<InternalClaim>
+        {
+            new("email", "hi@there.com"),
+            new("role", "admin"),
+            new("sub", "1234567890")
+        };
+
+        ExternalApiBaseUrlOverride = server.Url!;
+        server
+            .Given(
+                Request.Create().WithPath("/api/test").UsingGet()
+            )
+            .RespondWith(
+                Response.Create()
+                    .WithStatusCode(202)
+                    .WithHeader("Content-Type", "application/json")
+                    .WithBody(JsonSerializer.Serialize(claims, new JsonSerializerOptions(JsonSerializerDefaults.Web)))
+            );
     }
 
     private async Task CreateFreshSampleData(int numberOfProductsToCreate)

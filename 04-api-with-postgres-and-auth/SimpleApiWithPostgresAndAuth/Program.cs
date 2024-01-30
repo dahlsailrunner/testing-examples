@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog.Formatting.Compact;
+using SimpleApiWithPostgresAndAuth;
 using SimpleApiWithPostgresAndAuth.Data;
 using SimpleApiWithPostgresAndAuth.Validators;
 using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
@@ -25,6 +26,8 @@ try
 
     builder.Services.AddControllers();
     builder.Services.AddApiVersioning().AddMvc();
+
+    builder.Services.AddHttpClient<IExternalApiClient, ExternalApiClient>();
 
     builder.Services.AddDbContext<LocalContext>(options =>
         options.UseNpgsql(builder.Configuration.GetConnectionString("DbContext")));

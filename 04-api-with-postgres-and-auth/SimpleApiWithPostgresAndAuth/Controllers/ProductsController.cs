@@ -12,11 +12,13 @@ namespace SimpleApiWithPostgresAndAuth.Controllers;
 [ApiController]
 [ApiVersion("1.0")]
 [Route("v{version:apiVersion}/[controller]")]
-public class ProductsController(LocalContext context, ProductValidator validator) : ControllerBase
+public class ProductsController(LocalContext context, ProductValidator validator, IExternalApiClient apiClient) : ControllerBase
 {
     [HttpGet]
     public async Task<IEnumerable<Product>> GetProducts(string category = "all")
     {
+        var sampleClaims = await apiClient.GetSampleResult(HttpContext);
+
         return await context.Products
             .Where(p => p.Category == category || category == "all")
             .ToListAsync();
